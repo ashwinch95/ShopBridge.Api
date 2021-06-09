@@ -21,7 +21,5 @@ namespace ShopBridge.Api.Data
         public bool bIsAvailable { get; set; }
         public int iProductCategoryID { get; set; }
         public string vchBrand { get; set; }
-    
-        public virtual ProductCategory ProductCategory { get; set; }
     }
 }

@@ -5,9 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a5480af7d50444389453bbcacac86c15" Name="Diagram1">
-        <EntityTypeShape EntityType="ShopBridgeModel.ProductCategory" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ShopBridgeModel.Product" Width="1.5" PointX="3" PointY="0.875" />
-        <AssociationConnector Association="ShopBridgeModel.FK__Products__iProdu__25869641" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

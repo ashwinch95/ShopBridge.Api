@@ -13,19 +13,12 @@ namespace ShopBridge.Api.Implementation
         public List<ProductModel> GetProducts()
         {
             List<ProductModel> products = new List<ProductModel>();
-            try
+            using (var context = new ShopBridgeContext())
             {
-                using (var context = new ShopBridgeContext())
-                {
-                    var translator = new ProductTranslator();
-                    var dbProducts = context.GetProducts();
+                var translator = new ProductTranslator();
+                var dbProducts = context.GetProducts();
 
-                    products = dbProducts.Select(p => translator.FromDal(p)).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                products = dbProducts.Select(p => translator.FromDal(p)).ToList();
             }
 
             return products;
@@ -33,20 +26,18 @@ namespace ShopBridge.Api.Implementation
 
         public async Task<ProductModel> GetProduct(int productId)
         {
-            ProductModel product = new ProductModel();
-            try
+            ProductModel product = null;
+                        
+            using (var context = new ShopBridgeContext())
             {
-                using (var context = new ShopBridgeContext())
-                {
-                    var translator = new ProductTranslator();
-                    var dbProduct = await context.GetProduct(productId);
+                var translator = new ProductTranslator();
+                var dbProduct = await context.GetProduct(productId);
 
+                if (dbProduct != null)
+                {
+                    product = new ProductModel();
                     product = translator.FromDal(dbProduct);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
 
             return product;
@@ -54,20 +45,13 @@ namespace ShopBridge.Api.Implementation
 
         public async Task<ProductModel> AddProduct(ProductModel product)
         {
-            try
+            using (var context = new ShopBridgeContext())
             {
-                using (var context = new ShopBridgeContext())
-                {
-                    var translator = new ProductTranslator();
-                    var dbProduct = translator.ToDAL(product);
-                    dbProduct = await context.InsertProduct(dbProduct);   
-                    
-                    product = translator.FromDal(dbProduct);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                var translator = new ProductTranslator();
+                var dbProduct = translator.ToDAL(product);
+                dbProduct = await context.InsertProduct(dbProduct);   
+                
+                product = translator.FromDal(dbProduct);
             }
 
             return product;
@@ -75,20 +59,13 @@ namespace ShopBridge.Api.Implementation
 
         public async Task<ProductModel> ModifyProduct(ProductModel product)
         {
-            try
+            using (var context = new ShopBridgeContext())
             {
-                using (var context = new ShopBridgeContext())
-                {
-                    var translator = new ProductTranslator();
-                    var dbProduct = translator.ToDAL(product);
-                    dbProduct = await context.UpdateProduct(dbProduct);
+                var translator = new ProductTranslator();
+                var dbProduct = translator.ToDAL(product);
+                dbProduct = await context.UpdateProduct(dbProduct);
 
-                    product = translator.FromDal(dbProduct);
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
+                product = translator.FromDal(dbProduct);
             }
 
             return product;
@@ -96,16 +73,9 @@ namespace ShopBridge.Api.Implementation
 
         public async Task DeleteProduct(int productId)
         {
-            try
+            using (var context = new ShopBridgeContext())
             {
-                using (var context = new ShopBridgeContext())
-                {
-                    await context.DeleteProduct(productId);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                await context.DeleteProduct(productId);
             }
         }
     }

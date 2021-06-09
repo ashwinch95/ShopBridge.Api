@@ -5,13 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ShopBridgeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ProductCategory">
-          <Key>
-            <PropertyRef Name="iProductCategoryID" />
-          </Key>
-          <Property Name="iProductCategoryID" Type="int" Nullable="false" />
-          <Property Name="vchProductCategoryName" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="iProductID" />
@@ -24,45 +17,15 @@
           <Property Name="iProductCategoryID" Type="int" Nullable="false" />
           <Property Name="vchBrand" Type="varchar" MaxLength="20" />
         </EntityType>
-        <Association Name="FK__Products__iProdu__25869641">
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductCategory">
-              <PropertyRef Name="iProductCategoryID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="iProductCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ShopBridgeModelStoreContainer">
-          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="Product" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="Product" store:Type="Tables" />
-          <AssociationSet Name="FK__Products__iProdu__25869641" Association="Self.FK__Products__iProdu__25869641">
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopBridgeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ProductCategory">
-          <Key>
-            <PropertyRef Name="iProductCategoryID" />
-          </Key>
-          <Property Name="iProductCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="vchProductCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="ShopBridgeModel.FK__Products__iProdu__25869641" FromRole="ProductCategory" ToRole="Product" />
-        </EntityType>
         <EntityContainer Name="ShopBridgeEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ProductCategories" EntityType="ShopBridgeModel.ProductCategory" />
           <EntitySet Name="Products" EntityType="ShopBridgeModel.Product" />
-          <AssociationSet Name="FK__Products__iProdu__25869641" Association="ShopBridgeModel.FK__Products__iProdu__25869641">
-            <End Role="ProductCategory" EntitySet="ProductCategories" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Product">
           <Key>
@@ -75,34 +38,13 @@
           <Property Name="bIsAvailable" Type="Boolean" Nullable="false" />
           <Property Name="iProductCategoryID" Type="Int32" Nullable="false" />
           <Property Name="vchBrand" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ProductCategory" Relationship="ShopBridgeModel.FK__Products__iProdu__25869641" FromRole="Product" ToRole="ProductCategory" />
         </EntityType>
-        <Association Name="FK__Products__iProdu__25869641">
-          <End Type="ShopBridgeModel.ProductCategory" Role="ProductCategory" Multiplicity="1" />
-          <End Type="ShopBridgeModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductCategory">
-              <PropertyRef Name="iProductCategoryID" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="iProductCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ShopBridgeModelStoreContainer" CdmEntityContainer="ShopBridgeEntities">
-          <EntitySetMapping Name="ProductCategories">
-            <EntityTypeMapping TypeName="ShopBridgeModel.ProductCategory">
-              <MappingFragment StoreEntitySet="ProductCategory">
-                <ScalarProperty Name="iProductCategoryID" ColumnName="iProductCategoryID" />
-                <ScalarProperty Name="vchProductCategoryName" ColumnName="vchProductCategoryName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ShopBridgeModel.Product">
               <MappingFragment StoreEntitySet="Products">
